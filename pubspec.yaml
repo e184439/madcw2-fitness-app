@@ -1,0 +1,38 @@
+name: madcw2_fitness
+description: A new Flutter project.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.18.6 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  http:
+  shared_preferences:
+  permission_handler:
+  google_fonts:
+  flutter_form_builder:
+  hive:
+  hive_flutter:
+  form_builder_validators:
+  form_builder_extra_fields:
+  intl:
+  mobile_scanner:
+  location:
+  image_picker:
+  compress_images_flutter:
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+  hive_generator: ^2.0.0
+  build_runner: ^2.2.0
+
+flutter:
+  uses-material-design: true
