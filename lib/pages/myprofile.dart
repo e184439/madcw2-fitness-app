@@ -16,13 +16,8 @@ class myprofile extends StatelessWidget {
           centerTitle: true,
         ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+
         children: [
-          Padding(
-            padding: const EdgeInsets.all(1.0),
-            child: Image(image: AssetImage('assets/logo.png')),
-          ),
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: Form(child: Column(
@@ -57,6 +52,25 @@ class myprofile extends StatelessWidget {
                     },
                     validator: (value) {
                       return value!.isEmpty ? 'Please enter Sur Name' : null;
+                    },
+                  ),
+                ),
+                SizedBox(height: 15,),
+
+                Padding(
+                  padding: const EdgeInsets.all(1.0),
+                  child: TextFormField(
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: 'NIC',
+                      hintText: 'NIC',
+                      prefixIcon: Icon(Icons.account_box_rounded),
+                      border: OutlineInputBorder(),
+                    ),
+                    onChanged:(String value){
+                    },
+                    validator: (value) {
+                      return value!.isEmpty ? 'Please enter NIC NO' : null;
                     },
                   ),
                 ),
