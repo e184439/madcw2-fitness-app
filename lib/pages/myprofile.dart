@@ -76,6 +76,44 @@ class myprofile extends StatelessWidget {
                 ),
                 SizedBox(height: 15,),
 
+                Padding(
+                  padding: const EdgeInsets.all(1.0),
+                  child: TextFormField(
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(
+                      labelText: 'Email',
+                      hintText: 'Email',
+                      prefixIcon: Icon(Icons.account_box_rounded),
+                      border: OutlineInputBorder(),
+                    ),
+                    onChanged:(String value){
+                    },
+                    validator: (value) {
+                      return value!.isEmpty ? 'Please enter Email' : null;
+                    },
+                  ),
+                ),
+                SizedBox(height: 15,),
+
+                Padding(
+                  padding: const EdgeInsets.all(1.0),
+                  child: TextFormField(
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(
+                      labelText: 'Reason for Gym',
+                      hintText: 'Reason for Gym',
+                      prefixIcon: Icon(Icons.account_box_rounded),
+                      border: OutlineInputBorder(),
+                    ),
+                    onChanged:(String value){
+                    },
+                    validator: (value) {
+                      return value!.isEmpty ? 'Reason for Gym' : null;
+                    },
+                  ),
+                ),
+                SizedBox(height: 15,),
+
                 SizedBox(height: 30,),
                 Padding(
                   padding: const EdgeInsets.all(1.0),
@@ -87,6 +125,8 @@ class myprofile extends StatelessWidget {
                     textColor: Colors.white,
                   ),
                 ),
+
+
                 SizedBox(height: 30,),
 
 
