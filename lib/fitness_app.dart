@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:madcw2_fitness/pages/auth/login_page.dart';
-import 'package:madcw2_fitness/pages/dashboard_page.dart';
+import 'package:madcw2_fitness/pages/member/member_dashboard_page.dart';
 import 'package:madcw2_fitness/pages/landing_page.dart';
 import 'package:madcw2_fitness/util/app_theme.dart';
 
@@ -10,10 +10,11 @@ class FitnessApp extends StatelessWidget {
 
   ThemeData _buildTheme(brightness) {
     var baseTheme = ThemeData(
-      brightness: brightness, 
+      brightness: brightness,
       backgroundColor: AppTheme.primaryColor,
       appBarTheme: AppBarTheme(backgroundColor: AppTheme.appBarColor),
       primaryColor: Colors.green.shade900,
+      scaffoldBackgroundColor: Color(0xFFF4F4F4),
     );
 
     return baseTheme.copyWith(
@@ -33,7 +34,7 @@ class FitnessApp extends StatelessWidget {
         '/login': (context) => const LoginPage(
               key: Key('login-page'),
             ),
-        '/home': (context) => const DashboardPage(
+        '/home': (context) => const MemberDashboardPage(
               key: Key('dashboard-page'),
             )
       },
