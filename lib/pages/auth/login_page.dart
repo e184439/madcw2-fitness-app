@@ -1,11 +1,10 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:madcw2_fitness/services/auth.dart';
-import 'package:madcw2_fitness/util/dialogs.dart';
+import 'package:madcw2_fitness/pages/auth/login_as_page.dart';
+import 'package:madcw2_fitness/util/app_theme.dart';
+import 'package:madcw2_fitness/widgets/form/form_label.dart';
 import 'package:madcw2_fitness/widgets/loading_screen.dart';
+import 'package:madcw2_fitness/widgets/form/rounded_corner_text_field.dart';
 
 import '../../widgets/rounded_button.dart';
 
@@ -21,11 +20,13 @@ class LoginPageState extends State<LoginPage> {
 
   bool isLoading = false;
 
+  String userRole = 'receptionist';
+
   /// Handle login form submission
   void _handleFormSubmission() async {
     _formKey.currentState!.save();
     if (_formKey.currentState!.validate()) {
-      var data = _formKey.currentState!.value;
+      // var data = _formKey.currentState!.value;
 
       setState(() {
         isLoading = true;
@@ -54,8 +55,17 @@ class LoginPageState extends State<LoginPage> {
       // }
 
       // redirect to home page
-      Navigator.pushNamedAndRemoveUntil(
-          context, '/home', ModalRoute.withName('/home'));
+
+      if (userRole == 'member') {
+        Navigator.pushNamedAndRemoveUntil(
+            context, '/home', ModalRoute.withName('/home'));
+      } else {
+        Navigator.push(context, MaterialPageRoute(
+          builder: (context) {
+            return const LoginAsPage();
+          },
+        ));
+      }
     }
   }
 
@@ -67,14 +77,16 @@ class LoginPageState extends State<LoginPage> {
           : SafeArea(
               minimum: const EdgeInsets.all(16.0),
               child: SingleChildScrollView(
-                padding: const EdgeInsets.only(top: 128.0, bottom: 16.0),
+                padding: const EdgeInsets.only(top: 54.0, bottom: 16.0),
                 child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
-                        'Fitness App',
-                        style: TextStyle(fontSize: 24.0),
+                      Image.asset(
+                        'assets/images/logo-lg.png',
+                        height: 208.0,
+                        width: 208.0,
+                        fit: BoxFit.contain,
                       ),
                       FormBuilder(
                         key: _formKey,
@@ -82,57 +94,67 @@ class LoginPageState extends State<LoginPage> {
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              FormBuilderTextField(
+                              const FormLabel(
+                                text: 'Username',
+                              ),
+                              const SizedBox(
+                                height: 8.0,
+                              ),
+                              const RoundedCornerTextField(
+                                errorText: 'Please enter your name',
                                 name: 'username',
-                                decoration: const InputDecoration(
-                                  labelText: 'Mobile Number',
-                                  labelStyle: TextStyle(
-                                    fontSize: 16.0,
-                                  ),
-                                ),
-                                validator: FormBuilderValidators.compose([
-                                  FormBuilderValidators.required(
-                                      errorText: 'Please enter your mobile number'),
-                                ]),
-                                keyboardType: TextInputType.phone,
+                                textInputType: TextInputType.phone,
+                                isObscure: false,
+                                hintText: 'Please enter',
                               ),
                               const SizedBox(
                                 height: 16.0,
                               ),
-                              FormBuilderTextField(
-                                  name: 'password',
-                                  obscureText: true,
-                                  decoration: const InputDecoration(
-                                    labelText: 'Your Password',
-                                    labelStyle: TextStyle(
-                                      fontSize: 16.0,
+                              const FormLabel(
+                                text: 'Password',
+                              ),
+                              const SizedBox(
+                                height: 8.0,
+                              ),
+                              const RoundedCornerTextField(
+                                errorText: 'Please enter your password',
+                                name: 'password',
+                                textInputType: TextInputType.visiblePassword,
+                                isObscure: true,
+                                hintText: 'Please enter',
+                              ),
+                              const SizedBox(
+                                height: 8.0,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                // height: 48.0,
+                                children: [
+                                  InkWell(
+                                    onTap: () {},
+                                    child: const Text(
+                                      'Forgot Password',
+                                      textAlign: TextAlign.end,
                                     ),
                                   ),
-                                  keyboardType: TextInputType.visiblePassword,
-                                  validator: FormBuilderValidators.compose([
-                                    FormBuilderValidators.required(
-                                        errorText:
-                                            'Please enter your password'),
-                                  ])),
+                                ],
+                              ),
                               const SizedBox(
-                                height: 16.0,
+                                height: 93.0,
                               ),
                               SizedBox(
-                                width: const Size.fromHeight(200.0).width,
+                                width: const Size.fromHeight(40.0).width,
                                 // height: 48.0,
                                 child: RoundedButton(
                                   buttonText: 'Log in',
-                                  onPressed: _handleFormSubmission, isDisabled: false,
-                                  icon: const Icon(Icons.login, color: Colors.white,),
+                                  onPressed: _handleFormSubmission,
+                                  isDisabled: false,
                                 ),
                               ),
                               const SizedBox(
                                 height: 16.0,
-                              ),
-                              const Text(
-                                '(c) 2023 - Fitness App',
-                                textAlign: TextAlign.center,
                               ),
                             ],
                           ),

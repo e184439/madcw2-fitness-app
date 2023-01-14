@@ -25,6 +25,7 @@ dependencies:
   location:
   image_picker:
   compress_images_flutter:
+  splashscreen:
 
 dev_dependencies:
   flutter_test:
@@ -36,3 +37,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/
+    - assets/images/
+    - assets/images/banners/
