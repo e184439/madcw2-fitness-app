@@ -25,7 +25,11 @@ class RoundedCornerDropdown extends StatelessWidget {
           horizontal: 16.0,
         ),
         border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(16.0))),
+          borderRadius: BorderRadius.all(
+            Radius.circular(16.0),
+          ),
+        ),
+        hintText: 'Please Select',
       ),
       validator: FormBuilderValidators.compose([
         FormBuilderValidators.required(errorText: errorText),

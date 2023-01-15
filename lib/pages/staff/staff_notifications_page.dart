@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class MemberNotifications extends StatefulWidget {
-  const MemberNotifications({super.key});
+class StaffNotifications extends StatefulWidget {
+  const StaffNotifications({super.key});
 
   @override
-  State<MemberNotifications> createState() => _MemberNotificationsState();
+  State<StaffNotifications> createState() => _StaffNotificationsState();
 }
 
-class _MemberNotificationsState extends State<MemberNotifications> {
+class _StaffNotificationsState extends State<StaffNotifications> {
   @override
   Widget build(BuildContext context) {
     return Padding(

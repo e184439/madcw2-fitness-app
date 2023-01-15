@@ -11,17 +11,17 @@ class LoadingScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Image.asset('assets/images/logo-lg.png'),
-          SizedBox(
+          const SizedBox(
             height: 32.0,
           ),
-          Text(
+          const Text(
             'Please wait..',
             style: TextStyle(fontSize: 32.0),
           ),
-          SizedBox(
+          const SizedBox(
             height: 32.0,
           ),
-          CircularProgressIndicator()
+          const CircularProgressIndicator()
         ],
       ),
     );
