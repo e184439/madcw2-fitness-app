@@ -19,7 +19,7 @@ class RoundedCornerDatepicker extends StatelessWidget {
         border: Border.all(width: 1, color: Colors.grey),
         borderRadius: BorderRadius.circular(16.0),
       ),
-      padding: EdgeInsets.symmetric(
+      padding: const EdgeInsets.symmetric(
         vertical: 0.0,
         horizontal: 16.0,
       ),
@@ -28,9 +28,10 @@ class RoundedCornerDatepicker extends StatelessWidget {
           Expanded(
             child: FormBuilderDateTimePicker(
               name: name,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.zero,
+                hintText: 'Please Select',
               ),
               inputType: InputType.date,
               format: DateFormat("yyyy-MM-dd"),
@@ -39,7 +40,7 @@ class RoundedCornerDatepicker extends StatelessWidget {
               ]),
             ),
           ),
-          Icon(Icons.calendar_month_sharp),
+          const Icon(Icons.calendar_month_sharp),
         ],
       ),
     );

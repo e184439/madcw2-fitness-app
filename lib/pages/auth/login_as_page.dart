@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:madcw2_fitness/pages/staff/pages/staff_home_page.dart';
 import 'package:madcw2_fitness/pages/member/member_dashboard_page.dart';
 import 'package:madcw2_fitness/pages/staff/staff_dashboard_page.dart';
 import 'package:madcw2_fitness/widgets/loading_screen.dart';
@@ -52,7 +51,7 @@ class LoginAsPageState extends State<LoginAsPage> {
                         height: 20.0,
                       ),
                       RoundedButton(
-                        buttonText: 'Receptionist',
+                        buttonText: 'Staff',
                         onPressed: () {
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(

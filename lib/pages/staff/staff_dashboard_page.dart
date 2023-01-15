@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:madcw2_fitness/pages/my_profile_page.dart';
-import 'package:madcw2_fitness/pages/staff/pages/add_members_page.dart';
-import 'package:madcw2_fitness/pages/staff/pages/staff_home_page.dart';
-import 'package:madcw2_fitness/pages/staff/pages/staff_notifications_page.dart';
+import 'package:madcw2_fitness/pages/member/my_profile_page.dart';
+import 'package:madcw2_fitness/pages/staff/add_members_page.dart';
+import 'package:madcw2_fitness/pages/staff/staff_home_page.dart';
+import 'package:madcw2_fitness/pages/staff/staff_notifications_page.dart';
 import 'package:madcw2_fitness/util/app_theme.dart';
-import 'package:madcw2_fitness/widgets/ad_banner_slider.dart';
-import 'package:madcw2_fitness/widgets/grid_button.dart';
 
 class StaffDashboardPage extends StatefulWidget {
   const StaffDashboardPage({Key? key}) : super(key: key);
@@ -16,7 +14,7 @@ class StaffDashboardPage extends StatefulWidget {
 
 class _StaffDashboardPageState extends State<StaffDashboardPage> {
   int selectedIndex = 0;
-  final titles = ['HOME', 'NOTIFICATIONS', 'ADD MEMBERS', 'MY PROFILE'];
+  final titles = ['HOME', 'NOTIFICATIONS', 'ADD MEMBERS', 'MENU'];
   final pages = [
     const StaffHome(),
     const StaffNotifications(),
@@ -54,20 +52,20 @@ class _StaffDashboardPageState extends State<StaffDashboardPage> {
           });
         },
         selectedIconTheme: const IconThemeData(size: 28),
-        items: [
-          const BottomNavigationBarItem(
+        items: const [
+          BottomNavigationBarItem(
             label: '',
             icon: Icon(Icons.home),
           ),
-          const BottomNavigationBarItem(
+          BottomNavigationBarItem(
             label: '',
             icon: Icon(Icons.notifications_outlined),
           ),
-          const BottomNavigationBarItem(
+          BottomNavigationBarItem(
             label: '',
             icon: Icon(Icons.person_add_alt_1_outlined),
           ),
-          const BottomNavigationBarItem(
+          BottomNavigationBarItem(
             label: '',
             icon: Icon(Icons.grid_view),
           ),

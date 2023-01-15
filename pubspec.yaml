@@ -14,7 +14,6 @@ dependencies:
   http:
   shared_preferences:
   permission_handler:
-  google_fonts:
   flutter_form_builder:
   hive:
   hive_flutter:
@@ -22,10 +21,7 @@ dependencies:
   form_builder_extra_fields:
   intl:
   mobile_scanner:
-  location:
-  image_picker:
-  compress_images_flutter:
-  splashscreen:
+  flutter_widget_from_html:
 
 dev_dependencies:
   flutter_test:
