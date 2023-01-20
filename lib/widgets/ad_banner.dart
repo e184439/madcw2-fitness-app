@@ -11,8 +11,8 @@ class AdBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 340,
-      height: 200,
+      width: 280,
+      height: 180,
       color: Colors.grey.shade100,
       child: Stack(
         fit: StackFit.expand,

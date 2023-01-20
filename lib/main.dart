@@ -5,10 +5,7 @@ import 'package:madcw2_fitness/fitness_app.dart';
 Future<void> _initHive() async {
   await Hive.initFlutter();
 
-  /// register Hive adapters
   // Hive.registerAdapter(MyAdapter());
-
-  /// register boxes
   // await Hive.openBox<MyClass>('myClasses');
 }
 

@@ -4,11 +4,11 @@ import 'package:madcw2_fitness/util/api.dart';
 import 'package:madcw2_fitness/util/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<bool> signIn(username, password) async {
+Future<bool> signIn(telephone, password) async {
   var response = await Api.sendPostRequest(
     loginRoute,
     data: {
-      'telephone': username,
+      'contactNo': telephone,
       'password': password,
       'device_name': 'mobile-app',
     },

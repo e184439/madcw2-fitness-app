@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:madcw2_fitness/pages/auth/login_as_page.dart';
+import 'package:madcw2_fitness/services/auth.dart';
 import 'package:madcw2_fitness/util/app_theme.dart';
+import 'package:madcw2_fitness/util/dialogs.dart';
 import 'package:madcw2_fitness/widgets/form/form_label.dart';
 import 'package:madcw2_fitness/widgets/loading_screen.dart';
 import 'package:madcw2_fitness/widgets/form/rounded_corner_text_field.dart';
@@ -28,33 +30,33 @@ class LoginPageState extends State<LoginPage> {
   void _handleFormSubmission() async {
     _formKey.currentState!.save();
     if (_formKey.currentState!.validate()) {
-      // var data = _formKey.currentState!.value;
+      var data = _formKey.currentState!.value;
 
       setState(() {
         isLoading = true;
       });
 
       // send to login
-      // var isSignedIn = await signIn(data['username'], data['password']);
+      var isSignedIn = await signIn(data['username'], data['password']);
       setState(() {
         isLoading = false;
       });
 
       // load user information
-      // await loadUserInformation();
+      await loadUserInformation();
 
-      // if (!mounted) return;
-      //
-      // if (!isSignedIn) {
-      //   showMessageDialog(
-      //       context,
-      //       "Login Failed",
-      //       "Cannot log in with the provided credentials. Please check your username and password, and try again.",
-      //       "Ok", () {
-      //     Navigator.pop(context);
-      //   });
-      //   return;
-      // }
+      if (!mounted) return;
+
+      if (!isSignedIn) {
+        showMessageDialog(
+            context,
+            "Login Failed",
+            "Cannot log in with the provided credentials. Please check your username and password, and try again.",
+            "Ok", () {
+          Navigator.pop(context);
+        });
+        return;
+      }
 
       // redirect to home page
 
@@ -99,7 +101,7 @@ class LoginPageState extends State<LoginPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const FormLabel(
-                                text: 'Username',
+                                text: 'Phone Number',
                               ),
                               const SizedBox(
                                 height: 8.0,

@@ -17,6 +17,9 @@ class GridButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
+        margin: EdgeInsets.only(bottom: 16.0),
+        height: 120.0,
+        width: (MediaQuery.of(context).size.width / 100) * 40,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
