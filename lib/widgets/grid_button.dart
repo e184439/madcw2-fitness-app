@@ -17,16 +17,19 @@ class GridButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
+        margin: const EdgeInsets.only(bottom: 16.0),
+        height: 120.0,
+        width: (MediaQuery.of(context).size.width / 100) * 40,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               color: Color(0x19000000),
               blurRadius: 10,
               offset: Offset(0, 1),
             ),
           ],
-          color: Color(0xfff4f4f4),
+          color: const Color(0xfff4f4f4),
         ),
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -40,7 +43,7 @@ class GridButton extends StatelessWidget {
               Text(
                 text,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Color(0xffe51561),
                   fontSize: 20,
                   fontWeight: FontWeight.w600,

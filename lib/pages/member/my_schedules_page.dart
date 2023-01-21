@@ -14,7 +14,7 @@ class _MySchedulePageState extends State<MySchedulePage> {
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          'MY MEMBERSHIP PLANS',
+          'MY SCHEDULE',
           style: TextStyle(
             fontWeight: FontWeight.w800,
             fontSize: 24.0,
@@ -26,13 +26,12 @@ class _MySchedulePageState extends State<MySchedulePage> {
         child: Column(
           children: [
             ExpansionTile(
-              collapsedBackgroundColor: Colors.grey, 
-              childrenPadding: EdgeInsets.all(16.0),
-              leading: Icon(
+              childrenPadding: const EdgeInsets.all(16.0),
+              leading: const Icon(
                 Icons.check_circle_outline_outlined,
-                color: Colors.green,
+                color: Colors.grey,
               ),
-              title: Text(
+              title: const Text(
                 'Day 1',
                 style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
               ),
@@ -42,12 +41,12 @@ class _MySchedulePageState extends State<MySchedulePage> {
               ],
             ),
             ExpansionTile(
-              childrenPadding: EdgeInsets.all(16.0),
-              leading: Icon(
+              childrenPadding: const EdgeInsets.all(16.0),
+              leading: const Icon(
                 Icons.check_circle_outline_outlined,
                 color: Colors.grey,
               ),
-              title: Text(
+              title: const Text(
                 'Day 2',
                 style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
               ),
@@ -57,12 +56,12 @@ class _MySchedulePageState extends State<MySchedulePage> {
               ],
             ),
             ExpansionTile(
-              childrenPadding: EdgeInsets.all(16.0),
-              leading: Icon(
+              childrenPadding: const EdgeInsets.all(16.0),
+              leading: const Icon(
                 Icons.check_circle_outline_outlined,
                 color: Colors.grey,
               ),
-              title: Text(
+              title: const Text(
                 'Day 3',
                 style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
               ),
@@ -83,14 +82,14 @@ class _MySchedulePageState extends State<MySchedulePage> {
       children: [
         Text(
           name,
-          style: TextStyle(
+          style: const TextStyle(
             color: Color(0xff4a4a4a),
             fontSize: 20,
           ),
         ),
         Text(
           time,
-          style: TextStyle(
+          style: const TextStyle(
             color: Color(0xff4a4a4a),
             fontSize: 20,
           ),

@@ -11,8 +11,8 @@ class AdBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 340,
-      height: 200,
+      width: 280,
+      height: 180,
       color: Colors.grey.shade100,
       child: Stack(
         fit: StackFit.expand,
@@ -28,13 +28,13 @@ class AdBanner extends StatelessWidget {
             child: Stack(
               children: [
                 Positioned(
+                  left: 8.0,
+                  bottom: 8.0,
                   child: Image.asset(
                     'assets/images/logo.png',
                     width: 64.0,
                     height: 64.0,
                   ),
-                  left: 8.0,
-                  bottom: 8.0,
                 ),
                 Positioned(
                     left: 16.0,
@@ -42,7 +42,7 @@ class AdBanner extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           "UP TO",
                           style: TextStyle(
                             shadows: [
@@ -58,7 +58,7 @@ class AdBanner extends StatelessWidget {
                             fontWeight: FontWeight.w800,
                           ),
                         ),
-                        Text(
+                        const Text(
                           "40% OFF",
                           style: TextStyle(
                             // add text shadow
@@ -78,7 +78,7 @@ class AdBanner extends StatelessWidget {
                         Text(
                           "JOIN US",
                           style: TextStyle(
-                            shadows: [
+                            shadows: const [
                               Shadow(
                                 color: Colors.black,
                                 offset: Offset(1.0, 1.0),

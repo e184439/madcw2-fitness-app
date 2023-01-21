@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:madcw2_fitness/widgets/form/form_label.dart';
 import 'package:madcw2_fitness/widgets/form/rounded_corner_dropdown.dart';
 import 'package:madcw2_fitness/widgets/form/rounded_corner_text_field.dart';
 import 'package:madcw2_fitness/widgets/rounded_button.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class MyMembershipPlansPaymentPage extends StatefulWidget {
   const MyMembershipPlansPaymentPage({Key? key}) : super(key: key);
@@ -16,6 +18,22 @@ class MyMembershipPlansPaymentPage extends StatefulWidget {
 class _MyMembershipPlansPaymentPageState
     extends State<MyMembershipPlansPaymentPage> {
   final _formKey = GlobalKey<FormBuilderState>();
+
+  var cardNumberFormatter = MaskTextInputFormatter(
+      mask: '#### #### #### ####',
+      filter: {"#": RegExp(r'[0-9]')},
+      type: MaskAutoCompletionType.eager);
+
+  var expiryFormatter = MaskTextInputFormatter(
+      mask: '##/##',
+      filter: {"#": RegExp(r'[0-9]')},
+      type: MaskAutoCompletionType.eager);
+
+  var cvvFormatter = MaskTextInputFormatter(
+      mask: '###',
+      filter: {"#": RegExp(r'[0-9]')},
+      type: MaskAutoCompletionType.eager);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,9 +47,11 @@ class _MyMembershipPlansPaymentPageState
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: _getPaymentFormFragment(context),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: _getPaymentFormFragment(context),
+        ),
       ),
     );
   }
@@ -116,12 +136,27 @@ class _MyMembershipPlansPaymentPageState
                 const SizedBox(
                   height: 8.0,
                 ),
-                const RoundedCornerTextField(
-                  errorText: 'Please enter',
+                FormBuilderTextField(
                   name: 'card_number',
-                  textInputType: TextInputType.number,
-                  isObscure: false,
-                  hintText: 'Please enter',
+                  cursorHeight: 23.0,
+                  decoration: const InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(
+                      vertical: 8.0,
+                      horizontal: 16.0,
+                    ),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(16.0))),
+                    hintText: 'Please enter',
+                    hintStyle: TextStyle(
+                      fontSize: 16.0,
+                    ),
+                  ),
+                  validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(errorText: 'Please enter'),
+                  ]),
+                  keyboardType: TextInputType.number,
+                  obscureText: false,
+                  inputFormatters: [cardNumberFormatter],
                 ),
                 const SizedBox(
                   height: 8.0,

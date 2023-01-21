@@ -12,14 +12,14 @@ class LoadingScreen extends StatelessWidget {
         children: [
           Image.asset('assets/images/logo-lg.png'),
           const SizedBox(
-            height: 32.0,
+            height: 16.0,
           ),
           const Text(
             'Please wait..',
             style: TextStyle(fontSize: 32.0),
           ),
           const SizedBox(
-            height: 32.0,
+            height: 16.0,
           ),
           const CircularProgressIndicator()
         ],

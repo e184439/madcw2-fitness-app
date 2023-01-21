@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:madcw2_fitness/pages/common/menu_page.dart';
-import 'package:madcw2_fitness/pages/member/member_home_page.dart';
-import 'package:madcw2_fitness/pages/member/member_notifications.dart';
-import 'package:madcw2_fitness/pages/member/my_profile_page.dart';
+import 'package:madcw2_fitness/pages/staff/add_members_page.dart';
+import 'package:madcw2_fitness/pages/staff/staff_home_page.dart';
+import 'package:madcw2_fitness/pages/staff/staff_notifications_page.dart';
 import 'package:madcw2_fitness/util/app_theme.dart';
 
-class MemberDashboardPage extends StatefulWidget {
-  const MemberDashboardPage({Key? key}) : super(key: key);
+class InstructorDashboardPage extends StatefulWidget {
+  const InstructorDashboardPage({Key? key}) : super(key: key);
 
   @override
-  State<MemberDashboardPage> createState() => _MemberDashboardPageState();
+  State<InstructorDashboardPage> createState() =>
+      _InstructorDashboardPageState();
 }
 
-class _MemberDashboardPageState extends State<MemberDashboardPage> {
+class _InstructorDashboardPageState extends State<InstructorDashboardPage> {
   int selectedIndex = 0;
-  final titles = ['HOME', 'NOTIFICATIONS', 'MY PROFILE', 'MENU'];
+  final titles = ['HOME', 'NOTIFICATIONS', 'ADD MEMBERS', 'MENU'];
   final pages = [
-    const MemberHomePage(),
-    const MemberNotifications(),
-    const MyProfilePage(),
+    const StaffHome(),
+    const StaffNotifications(),
+    const AddMembersPage(),
     const MenuPage(),
   ];
 
@@ -51,6 +52,7 @@ class _MemberDashboardPageState extends State<MemberDashboardPage> {
             selectedIndex = index;
           });
         },
+        selectedIconTheme: const IconThemeData(size: 28),
         items: const [
           BottomNavigationBarItem(
             label: '',
@@ -62,7 +64,7 @@ class _MemberDashboardPageState extends State<MemberDashboardPage> {
           ),
           BottomNavigationBarItem(
             label: '',
-            icon: Icon(Icons.person_outline_rounded),
+            icon: Icon(Icons.person_add_alt_1_outlined),
           ),
           BottomNavigationBarItem(
             label: '',

@@ -14,7 +14,7 @@ class _StaffNotificationsState extends State<StaffNotifications> {
       padding: const EdgeInsets.all(16.0),
       child: ListView.separated(
           itemBuilder: (context, index) => _getNotificationItem(),
-          separatorBuilder: (context, index) => Divider(
+          separatorBuilder: (context, index) => const Divider(
                 height: 16.0,
               ),
           itemCount: 3),
@@ -25,7 +25,7 @@ class _StaffNotificationsState extends State<StaffNotifications> {
     return ClipRRect(
       borderRadius: BorderRadius.circular(5.0),
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
+        padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
         height: 70.0,
         decoration: const BoxDecoration(
           border: Border(
@@ -39,19 +39,19 @@ class _StaffNotificationsState extends State<StaffNotifications> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(
+            const Icon(
               Icons.mail_rounded,
               color: Color(0xFFF6B445),
               size: 38.0,
             ),
-            SizedBox(
+            const SizedBox(
               width: 8.0,
             ),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: const [
                   Text(
                     "Lorem Ipsum",
                     style: TextStyle(
@@ -75,7 +75,7 @@ class _StaffNotificationsState extends State<StaffNotifications> {
             ),
             IconButton(
               onPressed: () {},
-              icon: Icon(Icons.more_vert),
+              icon: const Icon(Icons.more_vert),
             ),
           ],
         ),

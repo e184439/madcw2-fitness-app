@@ -9,16 +9,16 @@ class AdBannerSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 232,
+      height: 180,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          return AdBanner(
+          return const AdBanner(
             imagePath: 'assets/images/banners/fitness-image-1.jpg',
           );
         },
         separatorBuilder: (context, index) {
-          return SizedBox(
+          return const SizedBox(
             width: 8.0,
           );
         },
