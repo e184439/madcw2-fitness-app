@@ -2,42 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:madcw2_fitness/util/app_theme.dart';
 import 'package:madcw2_fitness/widgets/rounded_button.dart';
 
-class MyMembershipPlansPage extends StatefulWidget {
-  const MyMembershipPlansPage({Key? key}) : super(key: key);
+class MyMembershipPage extends StatefulWidget {
+  const MyMembershipPage({Key? key}) : super(key: key);
 
   @override
-  State<MyMembershipPlansPage> createState() => _MyMembershipPlansPageState();
+  State<MyMembershipPage> createState() => _MyMembershipPageState();
 }
 
-class _MyMembershipPlansPageState extends State<MyMembershipPlansPage> {
+class _MyMembershipPageState extends State<MyMembershipPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          'MY MEMBERSHIP PLANS',
-          style: TextStyle(
-            fontWeight: FontWeight.w800,
-            fontSize: 24.0,
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: [
+          _getMembershipPlanItem(),
+          const SizedBox(
+            height: 32.0,
           ),
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            _getMembershipPlanItem(),
-            const SizedBox(
-              height: 32.0,
-            ),
-            RoundedButton(
-              buttonText: 'Active',
-              onPressed: () {},
-              isDisabled: false,
-            )
-          ],
-        ),
+          RoundedButton(
+            buttonText: 'Active',
+            onPressed: () {},
+            isDisabled: false,
+          )
+        ],
       ),
     );
   }

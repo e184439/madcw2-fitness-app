@@ -23,6 +23,7 @@ dependencies:
   mobile_scanner:
   flutter_widget_from_html:
   mask_text_input_formatter:
+  chart_sparkline:
 
 dev_dependencies:
   flutter_test:

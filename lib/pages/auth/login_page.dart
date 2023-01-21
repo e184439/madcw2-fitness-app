@@ -50,7 +50,10 @@ class LoginPageState extends State<LoginPage> {
         return;
       }
 
-      if (signInData['isStaff'] == null && signInData['isInstructor'] == null) {
+      if ((signInData['isStaff'] == null &&
+              signInData['isInstructor'] == null) ||
+          signInData['isStaff'] == false &&
+              signInData['isInstructor'] == false) {
         // not an instructor or staff
         Navigator.pushNamedAndRemoveUntil(
             context, '/home', ModalRoute.withName('/home'));

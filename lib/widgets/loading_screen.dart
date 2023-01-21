@@ -5,6 +5,7 @@ class LoadingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('running it');
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

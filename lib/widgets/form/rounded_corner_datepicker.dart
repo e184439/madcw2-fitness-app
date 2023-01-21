@@ -6,9 +6,10 @@ import 'package:intl/intl.dart';
 class RoundedCornerDatepicker extends StatelessWidget {
   final String name;
   final String errorText;
+  final String? date;
 
   const RoundedCornerDatepicker(
-      {Key? key, required this.name, required this.errorText})
+      {Key? key, required this.name, required this.errorText, this.date})
       : super(key: key);
 
   @override
@@ -37,6 +38,16 @@ class RoundedCornerDatepicker extends StatelessWidget {
               validator: FormBuilderValidators.compose([
                 FormBuilderValidators.required(errorText: errorText),
               ]),
+              initialDate: date == null
+                  ? null
+                  : (date! == 'null' || date!.isEmpty
+                      ? null
+                      : DateTime.parse(date!)),
+              initialValue: date == null
+                  ? null
+                  : (date! == 'null' || date!.isEmpty
+                      ? null
+                      : DateTime.parse(date!)),
             ),
           ),
           const Icon(Icons.calendar_month_sharp),
