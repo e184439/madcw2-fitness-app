@@ -1,10 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:madcw2_fitness/pages/auth/login_as_page.dart';
 import 'package:madcw2_fitness/services/auth.dart';
-import 'package:madcw2_fitness/util/app_theme.dart';
 import 'package:madcw2_fitness/util/dialogs.dart';
 import 'package:madcw2_fitness/widgets/form/form_label.dart';
 import 'package:madcw2_fitness/widgets/loading_screen.dart';
@@ -24,8 +21,6 @@ class LoginPageState extends State<LoginPage> {
 
   bool isLoading = false;
 
-  String userRole = 'receptionist';
-
   /// Handle login form submission
   void _handleFormSubmission() async {
     _formKey.currentState!.save();
@@ -37,17 +32,14 @@ class LoginPageState extends State<LoginPage> {
       });
 
       // send to login
-      var isSignedIn = await signIn(data['username'], data['password']);
+      var signInData = await signIn(data['username'], data['password']);
       setState(() {
         isLoading = false;
       });
 
-      // load user information
-      await loadUserInformation();
-
       if (!mounted) return;
 
-      if (!isSignedIn) {
+      if (signInData.isEmpty) {
         showMessageDialog(
             context,
             "Login Failed",
@@ -58,12 +50,12 @@ class LoginPageState extends State<LoginPage> {
         return;
       }
 
-      // redirect to home page
-
-      if (userRole == 'member') {
+      if (signInData['isStaff'] == null && signInData['isInstructor'] == null) {
+        // not an instructor or staff
         Navigator.pushNamedAndRemoveUntil(
             context, '/home', ModalRoute.withName('/home'));
       } else {
+        // could be an instructor or staff
         Navigator.push(context, MaterialPageRoute(
           builder: (context) {
             return const LoginAsPage();

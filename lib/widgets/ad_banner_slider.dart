@@ -13,12 +13,12 @@ class AdBannerSlider extends StatelessWidget {
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          return AdBanner(
+          return const AdBanner(
             imagePath: 'assets/images/banners/fitness-image-1.jpg',
           );
         },
         separatorBuilder: (context, index) {
-          return SizedBox(
+          return const SizedBox(
             width: 8.0,
           );
         },

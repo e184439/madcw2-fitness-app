@@ -1,5 +1,5 @@
 // API domain
-String domain = 'http://fitnessapi.janaksystem.com';
+String domain = 'fitnessapi.janaksystem.com';
 
 // API endpoints
 const String loginRoute = '/api/Member/login';

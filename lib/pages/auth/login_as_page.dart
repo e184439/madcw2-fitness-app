@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:madcw2_fitness/pages/instructor/instructor_dashboard_page.dart';
 import 'package:madcw2_fitness/pages/member/member_dashboard_page.dart';
 import 'package:madcw2_fitness/pages/staff/staff_dashboard_page.dart';
 import 'package:madcw2_fitness/widgets/loading_screen.dart';
 import 'package:madcw2_fitness/widgets/rounded_button.dart';
 import 'package:madcw2_fitness/widgets/rounded_outlined_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginAsPage extends StatefulWidget {
   const LoginAsPage({Key? key}) : super(key: key);
@@ -14,7 +15,32 @@ class LoginAsPage extends StatefulWidget {
 }
 
 class LoginAsPageState extends State<LoginAsPage> {
-  final _formKey = GlobalKey<FormBuilderState>();
+  String userType = '';
+
+  void setUserType() async {
+    // get isStaff and isInstructor from the SharedPreferences
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var isStaff = prefs.get('isStaff');
+    var isInstructor = prefs.get('isInstructor');
+    // check if instructor
+    if (isInstructor.toString() == 'true') {
+      setState(() {
+        userType = 'Instructor';
+      });
+    } else if (isStaff.toString() == 'true') {
+      setState(() {
+        userType = 'Staff';
+      });
+    }
+
+    prefs.setString('loggedInType', userType);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setUserType();
+  }
 
   bool isLoading = false;
 
@@ -51,12 +77,21 @@ class LoginAsPageState extends State<LoginAsPage> {
                         height: 20.0,
                       ),
                       RoundedButton(
-                        buttonText: 'Staff',
-                        onPressed: () {
+                        buttonText: userType,
+                        onPressed: () async {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          // set logged in type to whatever user has chosen
+                          prefs.setString('loggedInType', userType);
+
+                          if (!mounted) return;
+
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
                             builder: (context) {
-                              return const StaffDashboardPage();
+                              return userType == 'Staff'
+                                  ? const StaffDashboardPage()
+                                  : const InstructorDashboardPage();
                             },
                           ), (route) => false);
                         },
@@ -76,7 +111,14 @@ class LoginAsPageState extends State<LoginAsPage> {
                       ),
                       RoundedOutlinedButton(
                         buttonText: 'Member',
-                        onPressed: () {
+                        onPressed: () async {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          // set logged in type to Member
+                          prefs.setString('loggedInType', 'Member');
+
+                          if (!mounted) return;
+
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
                             builder: (context) {

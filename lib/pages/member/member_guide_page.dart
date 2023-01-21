@@ -61,26 +61,4 @@ class _MemberGuidePageState extends State<MemberGuidePage> {
       ),
     );
   }
-
-  Row _getTileRow(String name, String time) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          name,
-          style: const TextStyle(
-            color: Color(0xff4a4a4a),
-            fontSize: 20,
-          ),
-        ),
-        Text(
-          time,
-          style: const TextStyle(
-            color: Color(0xff4a4a4a),
-            fontSize: 20,
-          ),
-        ),
-      ],
-    );
-  }
 }

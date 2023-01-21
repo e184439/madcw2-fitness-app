@@ -13,7 +13,7 @@ class Api {
       'Content-type': 'application/json',
       'Accept': 'application/json'
     };
-    Uri uri = Uri.https(domain, route, data);
+    Uri uri = Uri.http(domain, route, data);
     return http.get(uri, headers: headers);
   }
 
@@ -28,13 +28,30 @@ class Api {
     };
     headersWithToken.addAll(headers ?? {});
 
-    Uri uri = Uri.https(domain, route);
+    Uri uri = Uri.http(domain, route);
 
     var response = http.post(
       uri,
       headers: headersWithToken,
       body: data,
     );
+
+    return response;
+  }
+
+  static Future<http.Response> sendPostRequestWithoutAuth(String route,
+      {Object? data, Map<String, String>? headers}) async {
+    Map<String, String>? requestHeaders = {};
+    requestHeaders.addAll(headers ?? {});
+
+    Uri uri = Uri.http(domain, route);
+
+    var response = http.post(
+      uri,
+      headers: requestHeaders,
+      body: data,
+    );
+
     return response;
   }
 

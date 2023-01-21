@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:madcw2_fitness/pages/common/menu_page.dart';
 import 'package:madcw2_fitness/pages/member/my_profile_page.dart';
 import 'package:madcw2_fitness/pages/staff/add_members_page.dart';
 import 'package:madcw2_fitness/pages/staff/staff_home_page.dart';
@@ -19,7 +20,7 @@ class _StaffDashboardPageState extends State<StaffDashboardPage> {
     const StaffHome(),
     const StaffNotifications(),
     const AddMembersPage(),
-    const MyProfilePage(),
+    const MenuPage(),
   ];
 
   @override
