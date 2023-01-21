@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:madcw2_fitness/pages/common/menu_page.dart';
 import 'package:madcw2_fitness/pages/member/member_home_page.dart';
 import 'package:madcw2_fitness/pages/member/member_notifications.dart';
-import 'package:madcw2_fitness/pages/member/my_profile_page.dart';
+import 'package:madcw2_fitness/pages/member/my_membership_page.dart';
 import 'package:madcw2_fitness/util/app_theme.dart';
 
 class MemberDashboardPage extends StatefulWidget {
@@ -14,11 +14,11 @@ class MemberDashboardPage extends StatefulWidget {
 
 class _MemberDashboardPageState extends State<MemberDashboardPage> {
   int selectedIndex = 0;
-  final titles = ['HOME', 'NOTIFICATIONS', 'MY PROFILE', 'MENU'];
+  final titles = ['HOME', 'NOTIFICATIONS', 'MY MEMBERSHIP', 'MENU'];
   final pages = [
     const MemberHomePage(),
     const MemberNotifications(),
-    const MyProfilePage(),
+    const MyMembershipPage(),
     const MenuPage(),
   ];
 

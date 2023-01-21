@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
-
 import 'package:http/http.dart';
 import 'package:madcw2_fitness/util/api.dart';
 import 'package:madcw2_fitness/util/constants.dart';
@@ -18,7 +16,6 @@ Future<Map<String, dynamic>> signIn(telephone, password) async {
       return {};
     }
   } on Exception catch (e) {
-    log('found error in login: $e');
     return {};
   }
 
@@ -35,11 +32,12 @@ Future<Map<String, dynamic>> signIn(telephone, password) async {
   prefs.setString("memberNo", '${data['memberNo']}');
   prefs.setString("contactNo", '${data['contactNo']}');
   prefs.setString("nic", '${data['nic']}');
-  prefs.setString("gender", '${data['gender']}');
+  prefs.setString("gender", data['gender'] == 1 ? 'male' : 'female');
   prefs.setString("email", '${data['email']}');
   prefs.setString("dob", '${data['dob']}');
   prefs.setString("registerDate", '${data['registerDate']}');
   prefs.setString("weight", '${data['weight']}');
+  prefs.setString("height", '${data['height']}');
   prefs.setString("bmi", '${data['bmi']}');
   prefs.setString("isStaff", '${data['isStaff']}');
   prefs.setString("isInstructor", '${data['isInstructor']}');

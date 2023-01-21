@@ -1,10 +1,17 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:madcw2_fitness/util/api.dart';
+import 'package:madcw2_fitness/util/constants.dart';
+import 'package:madcw2_fitness/util/dialogs.dart';
 import 'package:madcw2_fitness/widgets/form/form_label.dart';
 import 'package:madcw2_fitness/widgets/form/rounded_corner_datepicker.dart';
 import 'package:madcw2_fitness/widgets/form/rounded_corner_dropdown.dart';
 import 'package:madcw2_fitness/widgets/form/rounded_corner_text_field.dart';
+import 'package:madcw2_fitness/widgets/loading_screen.dart';
 import 'package:madcw2_fitness/widgets/rounded_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddMembersPage extends StatefulWidget {
   const AddMembersPage({super.key});
@@ -14,28 +21,101 @@ class AddMembersPage extends StatefulWidget {
 }
 
 class _AddMembersPageState extends State<AddMembersPage> {
-  final _personalDetailsFormKey = GlobalKey<FormBuilderState>();
+  final _formKey = GlobalKey<FormBuilderState>();
+
+  bool isLoading = false;
+
+  late int weight = 0;
+  late int height = 0;
+  late double bmi = 0.0;
 
   String step = 'personal';
 
   bool isEnrolledInGymBefore = false;
   bool isHasInjuredBefore = false;
-  int bmi = 0;
-  int height = 0;
-  int weight = 0;
 
-  /// calculate bmi form weight and height
   void calculateBMI() {
-    if (height == 0 || weight == 0) bmi = 0;
+    if (height == 0 || weight == 0) {
+      setState(() {
+        bmi = 0.0;
+      });
+    }
 
-    bmi = (weight / (height * height)).round();
+    try {
+      double cal = ((weight / height / height) * 10000).ceilToDouble();
+      setState(() {
+        bmi = cal;
+      });
+    } catch (e) {
+      setState(() {
+        bmi = 0.0;
+      });
+    }
+  }
+
+  Future<void> createMemberProfile() async {
+    _formKey.currentState!.save();
+    var valueMap = _formKey.currentState!.value;
+    print(valueMap);
+    var data = {
+      "id": 0,
+      'membership_type': valueMap['membership_type'],
+      'firstName': valueMap['firstName'],
+      'lastName': valueMap['lastName'],
+      'dob': valueMap['dob'].toIso8601String(),
+      'nic_no': valueMap['nic_no'],
+      'gender': valueMap['gender'] == 'male' ? 1 : 2,
+      'remarks': valueMap['remarks'],
+      'weight': valueMap['weight'],
+      'height': valueMap['height'],
+      "bmi": bmi,
+      "contactNo": valueMap['contactNo'],
+      "email": valueMap['email'],
+      "password": valueMap['password'],
+      "isStaff": false,
+      "isInstructor": false,
+    };
+
+    // send to the API to create profile here
+    Map<String, String>? headers = {'Content-Type': 'application/json'};
+    var response = await Api.sendPostRequestWithoutAuth(saveMemberRoute,
+        data: jsonEncode(data), headers: headers);
+
+    print(response.body);
+    print(response.statusCode);
+
+    if (!mounted) return;
+
+    if (response.statusCode == 200) {
+      showMessageDialog(
+        context,
+        'Success',
+        'Member profile created successfully.',
+        'OK',
+        () {
+          Navigator.of(context).pop();
+        },
+      );
+    } else {
+      showMessageDialog(
+        context,
+        'Failed',
+        'Failed to create',
+        'OK',
+        () {
+          Navigator.of(context).pop();
+        },
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: getPersonalInfoFragment(context),
-    );
+    return isLoading
+        ? const LoadingScreen()
+        : SingleChildScrollView(
+            child: getPersonalInfoFragment(context),
+          );
   }
 
   /// get personal info fragment
@@ -43,7 +123,7 @@ class _AddMembersPageState extends State<AddMembersPage> {
     return Column(
       children: [
         FormBuilder(
-          key: _personalDetailsFormKey,
+          key: _formKey,
           autovalidateMode: AutovalidateMode.disabled,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -51,48 +131,32 @@ class _AddMembersPageState extends State<AddMembersPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const FormLabel(
-                  text: 'Membership Number',
-                ),
-                const SizedBox(
-                  height: 8.0,
-                ),
-                const RoundedCornerTextField(
-                  errorText: 'Please enter',
-                  name: 'membership_number',
-                  textInputType: TextInputType.text,
-                  isObscure: false,
-                  hintText: 'Please enter',
-                ),
-                const SizedBox(
-                  height: 8.0,
-                ),
-                const FormLabel(
                   text: 'Membership Type',
                 ),
                 const SizedBox(
                   height: 8.0,
                 ),
-                const RoundedCornerDropdown(
+                RoundedCornerDropdown(
                   name: 'membership_type',
                   errorText: 'Please select a membership type',
-                  items: [
-                    DropdownMenuItem(value: 'test', child: Text('Test')),
-                    DropdownMenuItem(value: 'test2', child: Text('Test2')),
-                    DropdownMenuItem(value: 'test3', child: Text('Test3')),
-                  ],
+                  items: ['Gold Package', 'Silver Package', 'Bronze Package']
+                      .map((e) =>
+                          DropdownMenuItem<String>(value: e, child: Text(e)))
+                      .toList(),
+                  initialValue: 'Gold Package',
                 ),
                 const SizedBox(
                   height: 8.0,
                 ),
                 const FormLabel(
-                  text: 'Firstname',
+                  text: 'First Name',
                 ),
                 const SizedBox(
                   height: 8.0,
                 ),
                 const RoundedCornerTextField(
                   errorText: 'Please enter',
-                  name: 'firstname',
+                  name: 'firstName',
                   textInputType: TextInputType.text,
                   isObscure: false,
                   hintText: 'Please enter',
@@ -101,18 +165,17 @@ class _AddMembersPageState extends State<AddMembersPage> {
                   height: 8.0,
                 ),
                 const FormLabel(
-                  text: 'Surname',
+                  text: 'Last Name',
                 ),
                 const SizedBox(
                   height: 8.0,
                 ),
                 const RoundedCornerTextField(
-                  errorText: 'Please enter',
-                  name: 'surname',
-                  textInputType: TextInputType.text,
-                  isObscure: false,
-                  hintText: 'Please enter',
-                ),
+                    errorText: 'Please enter',
+                    name: 'lastName',
+                    textInputType: TextInputType.text,
+                    isObscure: false,
+                    hintText: 'Please enter'),
                 const SizedBox(
                   height: 8.0,
                 ),
@@ -123,7 +186,7 @@ class _AddMembersPageState extends State<AddMembersPage> {
                   height: 8.0,
                 ),
                 const RoundedCornerDatepicker(
-                  name: 'dateofbirth',
+                  name: 'dob',
                   errorText: 'Please select date of birth',
                 ),
                 const SizedBox(
@@ -151,13 +214,18 @@ class _AddMembersPageState extends State<AddMembersPage> {
                 const SizedBox(
                   height: 8.0,
                 ),
-                const RoundedCornerDropdown(
+                RoundedCornerDropdown(
                   name: 'gender',
                   errorText: 'Please select gender',
-                  items: [
-                    DropdownMenuItem(value: 'male', child: Text('Male')),
-                    DropdownMenuItem(value: 'female', child: Text('Female')),
-                  ],
+                  items: ['male', 'female']
+                      .map(
+                        (e) => DropdownMenuItem<String>(
+                          value: e,
+                          child: Text(e),
+                        ),
+                      )
+                      .toList(),
+                  initialValue: 'male',
                 ),
                 const SizedBox(
                   height: 16.0,
@@ -269,10 +337,12 @@ class _AddMembersPageState extends State<AddMembersPage> {
                   ),
                   isObscure: false,
                   hintText: 'Please enter',
+                  value: '$weight',
                   onChanged: (value) {
                     setState(() {
-                      calculateBMI();
+                      weight = value.isEmpty ? 0 : int.parse(value);
                     });
+                    calculateBMI();
                   },
                 ),
                 // weight kg end
@@ -288,15 +358,22 @@ class _AddMembersPageState extends State<AddMembersPage> {
                 const SizedBox(
                   height: 8.0,
                 ),
-                const RoundedCornerTextField(
+                RoundedCornerTextField(
                   errorText: 'Please enter',
                   name: 'height',
-                  textInputType: TextInputType.numberWithOptions(
+                  textInputType: const TextInputType.numberWithOptions(
                     signed: true,
                     decimal: false,
                   ),
                   isObscure: false,
                   hintText: 'Please enter',
+                  value: '$height',
+                  onChanged: (value) {
+                    setState(() {
+                      height = value.isEmpty ? 0 : int.parse(value);
+                    });
+                    calculateBMI();
+                  },
                 ),
                 // height kg end
 
@@ -310,7 +387,6 @@ class _AddMembersPageState extends State<AddMembersPage> {
                 const SizedBox(
                   height: 8.0,
                 ),
-
                 Container(
                   decoration: BoxDecoration(
                     border: Border.all(width: 1, color: Colors.grey),
@@ -322,13 +398,63 @@ class _AddMembersPageState extends State<AddMembersPage> {
                     vertical: 12.0,
                     horizontal: 16.0,
                   ),
-                  child: const Text(
-                    '0',
-                    style: TextStyle(fontSize: 16.0),
+                  child: Text(
+                    bmi.toStringAsFixed(1),
+                    style: const TextStyle(fontSize: 16.0),
                   ),
                 ),
+                const SizedBox(
+                  height: 16.0,
+                ),
 
-                // end add general info page items here
+                const FormLabel(
+                  text: 'Phone Number',
+                ),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                const RoundedCornerTextField(
+                  errorText: 'Please enter your name',
+                  name: 'contactNo',
+                  textInputType: TextInputType.phone,
+                  isObscure: false,
+                  hintText: 'Please enter',
+                ),
+                const SizedBox(
+                  height: 16.0,
+                ),
+                const FormLabel(
+                  text: 'Password',
+                ),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                const RoundedCornerTextField(
+                  errorText: 'Enter new password',
+                  name: 'password',
+                  textInputType: TextInputType.visiblePassword,
+                  isObscure: true,
+                  hintText: 'Please enter',
+                ),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                const FormLabel(
+                  text: 'Email Address',
+                ),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                const RoundedCornerTextField(
+                  errorText: 'Please enter',
+                  name: 'email',
+                  textInputType: TextInputType.emailAddress,
+                  isObscure: false,
+                  hintText: 'Please enter',
+                ),
+                const SizedBox(
+                  height: 16.0,
+                ),
                 const SizedBox(
                   height: 16.0,
                 ),
@@ -336,8 +462,18 @@ class _AddMembersPageState extends State<AddMembersPage> {
                   width: const Size.fromHeight(40.0).width,
                   // height: 48.0,
                   child: RoundedButton(
-                    buttonText: 'Submit',
-                    onPressed: () {},
+                    buttonText: 'Create Member Profile',
+                    onPressed: () async {
+                      setState(() {
+                        isLoading = true;
+                      });
+
+                      await createMemberProfile();
+
+                      setState(() {
+                        isLoading = false;
+                      });
+                    },
                     isDisabled: false,
                   ),
                 ),

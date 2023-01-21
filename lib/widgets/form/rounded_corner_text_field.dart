@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
@@ -9,6 +10,8 @@ class RoundedCornerTextField extends StatelessWidget {
   final bool isObscure;
   final String hintText;
   final Function? onChanged;
+  final String? value;
+  final TextInputFormatter? formatter;
 
   const RoundedCornerTextField({
     Key? key,
@@ -18,6 +21,8 @@ class RoundedCornerTextField extends StatelessWidget {
     required this.isObscure,
     required this.hintText,
     this.onChanged,
+    this.value,
+    this.formatter,
   }) : super(key: key);
 
   @override
@@ -46,6 +51,8 @@ class RoundedCornerTextField extends StatelessWidget {
           onChanged!(value);
         }
       },
+      initialValue: value,
+      inputFormatters: formatter != null ? [formatter!] : [],
     );
   }
 }

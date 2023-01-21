@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:madcw2_fitness/util/app_theme.dart';
 import 'package:madcw2_fitness/widgets/rounded_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -11,6 +12,8 @@ class MenuPage extends StatefulWidget {
 
 class _MenuPageState extends State<MenuPage> {
   String userType = '';
+  String firstName = '';
+  String lastName = '';
 
   void setUserType() async {
     // get isStaff and isInstructor from the SharedPreferences
@@ -31,6 +34,11 @@ class _MenuPageState extends State<MenuPage> {
         userType = 'Member';
       });
     }
+
+    setState(() {
+      firstName = prefs.getString('firstName') ?? 'Guest';
+      lastName = prefs.getString('lastName') ?? '';
+    });
   }
 
   @override
@@ -49,13 +57,26 @@ class _MenuPageState extends State<MenuPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               getMenuTileContainer(
+                Text(
+                  'Welcome $firstName $lastName!',
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+              ),
+              getMenuTileContainer(
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Logged in as: ',
-                        style: Theme.of(context).textTheme.headline6),
-                    Text('$userType User',
-                        style: Theme.of(context).textTheme.headline6),
+                    Text(
+                      'Logged in as: ',
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                    Text(
+                      userType,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline6
+                          ?.copyWith(color: AppTheme.appBarColor),
+                    ),
                   ],
                 ),
               ),
@@ -65,7 +86,40 @@ class _MenuPageState extends State<MenuPage> {
                   children: [
                     RoundedButton(
                         buttonText: 'Logout',
-                        onPressed: () {},
+                        onPressed: () async {
+                          // confirm to log out
+                          await showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: const Text('Confirm Logout'),
+                              content: const Text(
+                                  'Are you sure you want to log out?'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () async {
+                                    Navigator.pop(context, true);
+                                    // clear all saved preference items
+                                    SharedPreferences prefs =
+                                        await SharedPreferences.getInstance();
+                                    prefs.clear();
+
+                                    if (!mounted) return;
+
+                                    // redirect to /
+                                    Navigator.pushNamedAndRemoveUntil(
+                                        context, '/', (route) => false);
+                                  },
+                                  child: const Text('Yes'),
+                                ),
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(context, false),
+                                  child: const Text('No'),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
                         isDisabled: false)
                   ],
                 ),

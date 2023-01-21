@@ -1,10 +1,12 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:madcw2_fitness/util/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Api {
   static Future<http.Response> sendGetRequest(String route,
-      {Map<String, dynamic>? data}) async {
+      {Map<String, dynamic>? data, Map<String, dynamic>? headers}) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     var token = sharedPreferences.getString('token');
 
@@ -13,6 +15,10 @@ class Api {
       'Content-type': 'application/json',
       'Accept': 'application/json'
     };
+    if (headers != null && headers.length > 0) {
+      headers.addAll(headers);
+    }
+
     Uri uri = Uri.http(domain, route, data);
     return http.get(uri, headers: headers);
   }
@@ -33,7 +39,7 @@ class Api {
     var response = http.post(
       uri,
       headers: headersWithToken,
-      body: data,
+      body: json.encode(data),
     );
 
     return response;

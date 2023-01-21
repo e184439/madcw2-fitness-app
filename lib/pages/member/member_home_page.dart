@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:madcw2_fitness/pages/member/member_guide_page.dart';
 import 'package:madcw2_fitness/pages/member/my_membership_plans_payment_page.dart';
 import 'package:madcw2_fitness/pages/member/my_profile_page.dart';
+import 'package:madcw2_fitness/pages/member/my_progress_page.dart';
 import 'package:madcw2_fitness/pages/member/my_schedules_page.dart';
 import 'package:madcw2_fitness/widgets/ad_banner_slider.dart';
 import 'package:madcw2_fitness/widgets/grid_button.dart';
@@ -69,7 +70,13 @@ class _MemberHomePageState extends State<MemberHomePage> {
                     GridButton(
                       image: 'assets/images/rising.png',
                       text: 'My Progress',
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) {
+                            return const MyProgressPage();
+                          },
+                        ));
+                      },
                     )
                   ],
                 ),
